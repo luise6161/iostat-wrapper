@@ -4,15 +4,23 @@ Wrap iostat outputs into array of object.
 Wrapper around [iostat]( http://sebastien.godard.pagesperso-orange.fr/man_iostat.html ) for Node,
 providing an EventEmitter to get information.
 
-Provide 2 methods. 
+Provide 3 methods. 
 
 `ToObject(rawOutput)`: Convert raw string output of iostat into array of objects. Return an array.
 
-`Process(args)`: Provide an EventEmitter to handle the output from iostat.
+`Process(args)`: Provide an Promise to wrap RunIOStat. This is to conveniently use `.then` or `await`.
+
+```js
+    iostat.Process(['-x']).then(data => {
+        console.log(data);
+    })
+```
+
+`RunIOStat(args)`: Provide an EventEmitter to handle the output from iostat.
 
 Data comes back as an event 'data'. You can bind the event like 
 ```js
-    iostat().Process().on('data', (data, error)=>{
+    iostat.RunIOStat().on('data', (data, error)=>{
         console.log(data);
     });
 ```
@@ -49,19 +57,19 @@ Data comes back as an event 'data'. You can bind the event like
     }]
 ```
 
-The schema of `data` will be different, according to the output of iostat.
+The schema of `data` would be different, according to the output of iostat.
 
 `error` will give out the error message if there is anything wrong with running iostat.
 
 If need to run iostat in continuous, like with arguments ['-x','-m','2']. You will recieve an array of 2 objects.
 
 Takes an Array of iostat arguments as an array. Take ['-x', '-m'] by default.
-e.g : iostat.Process(['-x','-m','2']);
+e.g : iostat.RunIOStat(['-x','-m','2']);
 
 ## Example
 ```js
     var iostat = require('iostat-wrapper');
-    iostat.Process(['-x','-m','2']).on('data', function(data, error) {
+    iostat.RunIOStat(['-x','-m','2']).on('data', function(data, error) {
         console.log(stats);
         if (stats[0].devices.sda && stats[0].devices.sda["%util"] > 1)
             console("Too Heavy");

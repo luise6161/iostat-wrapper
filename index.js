@@ -1,7 +1,7 @@
 var spawn = require('child_process').spawn,
     EventEmitter = require('events').EventEmitter;
 
-function Process(options) {
+function RunIOStat(options) {
     options = options||["-x", "-m"];
     process.env.LANG="en_US.utf8"; //enforce en_US to avoid locale problem
   
@@ -27,6 +27,19 @@ function Process(options) {
     });
     
     return emitter;
+}
+
+function Process(options) {
+    return new Promise((resolve, reject) => {
+        var emitter = RunIOStat(options);
+        emitter.on('data', (data, error) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(data);
+            }
+        });
+    })
 }
 
 function ConvertToArray(line) {
@@ -100,4 +113,4 @@ function ToObject(output) {
     return result;
 }
 
-module.exports = {Process, ToObject};
+module.exports = {RunIOStat, ToObject, Process};
