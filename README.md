@@ -18,7 +18,7 @@ Data comes back as an event 'data'. You can bind the event like
 ```
 
 `data` is an Array of Object of this kind of form :
-```json
+```js
     [{ 
         cpu: 
         { 
