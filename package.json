@@ -2,7 +2,7 @@
     "author": "luise6161",
     "name": "iostat-wrapper",
     "description": "A simple wrapper in NodeJS. Wrap iostat outputs into array of object for monitoring i/o usage on a unix machine. package sysstat is necessary.",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "homepage": "https://github.com/luise6161/iostat-wrapper",
     "repository": {
       "type": "git",
@@ -11,6 +11,18 @@
     "main": "index.js",
     "engines": {
       "node": ">=v0.4.0"
-    }
+    },
+    "keywords": [
+      "iostat",
+      "cpu",
+      "disk",
+      "usage",
+      "monitor",
+      "linux",
+      "sysiostat",
+      "system",
+      "wrapper",
+      "hardware"
+    ]
   }
   
